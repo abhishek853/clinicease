@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClinicEase Features Visualization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .feature-visualization {
+            width: 100%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 8s infinite linear;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .clinic-ease-logo {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 24px;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            position: relative;
+        }
+
+        .feature-item {
+            padding: 30px 25px;
+            text-align: center;
+            border-right: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+            position: relative;
+            background: white;
+        }
+
+        .feature-item:nth-child(4n) {
+            border-right: none;
+        }
+
+        .feature-item:nth-child(n+5) {
+            border-bottom: none;
+        }
+
+        .feature-item:hover {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-icon::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 25px;
+            opacity: 0.3;
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover .feature-icon::after {
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            opacity: 0.5;
+        }
+
+        .reception .feature-icon {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .reception .feature-icon::after {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .prescription .feature-icon {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .prescription .feature-icon::after {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .emr .feature-icon {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+
+        .emr .feature-icon::after {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+
+        .analytics .feature-icon {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .analytics .feature-icon::after {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .settings .feature-icon {
+            background: linear-gradient(135deg, #f39c12, #d35400);
+        }
+
+        .settings .feature-icon::after {
+            background: linear-gradient(135deg, #f39c12, #d35400);
+        }
+
+        .support .feature-icon {
+            background: linear-gradient(135deg, #1abc9c, #16a085);
+        }
+
+        .support .feature-icon::after {
+            background: linear-gradient(135deg, #1abc9c, #16a085);
+        }
+
+        .billing .feature-icon {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+        }
+
+        .billing .feature-icon::after {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+        }
+
+        .staff .feature-icon {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+        }
+
+        .staff .feature-icon::after {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+        }
+
+        .feature-item h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .feature-item p {
+            font-size: 14px;
+            color: #7f8c8d;
+            line-height: 1.5;
+        }
+
+        .feature-highlight {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+            animation: rotate 20s infinite linear;
+        }
+
+        .center-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            z-index: 5;
+            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
+            animation: pulse 3s infinite;
+        }
+
+        .connection-line {
+            position: absolute;
+            background: linear-gradient(90deg, #3498db, transparent);
+            height: 2px;
+            transform-origin: left center;
+            z-index: 2;
+        }
+
+        /* Animation for connection lines */
+        .connection-line::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: 0;
+            width: 6px;
+            height: 6px;
+            background: #3498db;
+            border-radius: 50%;
+            animation: flow 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        @keyframes rotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes flow {
+            0% { transform: translateX(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(20px); opacity: 0; }
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .features-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .feature-item:nth-child(2n) {
+                border-right: none;
+            }
+            
+            .feature-item:nth-child(n+7) {
+                border-bottom: 1px solid #f0f0f0;
+            }
+            
+            .feature-item:last-child, .feature-item:nth-last-child(2) {
+                border-bottom: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .features-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature-item {
+                border-right: none;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            
+            .feature-item:last-child {
+                border-bottom: none;
+            }
+            
+            .header h1 {
+                font-size: 32px;
+            }
+            
+            .center-circle {
+                width: 120px;
+                height: 120px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="feature-visualization">
+        <div class="header">
+            <div class="clinic-ease-logo">ClinicEase</div>
+            <h1>Complete Healthcare Management Suite</h1>
+            <p>Streamlining healthcare operations with advanced digital solutions</p>
+        </div>
+        
+        <div class="features-container">
+            <!-- Reception Management -->
+            <div class="feature-item reception">
+                <div class="feature-icon">📋</div>
+                <h3>Reception Management</h3>
+                <p>Streamline front-desk operations with intelligent patient flow management</p>
+            </div>
+            
+            <!-- Online Prescription -->
+            <div class="feature-item prescription">
+                <div class="feature-icon">💊</div>
+                <h3>Online Prescription</h3>
+                <p>Digital prescriptions with drug interaction alerts and pharmacy integration</p>
+            </div>
+            
+            <!-- EMR -->
+            <div class="feature-item emr">
+                <div class="feature-icon">🏥</div>
+                <h3>Electronic Medical Records</h3>
+                <p>Complete patient history management with secure cloud storage</p>
+            </div>
+            
+            <!-- Analytics Dashboard -->
+            <div class="feature-item analytics">
+                <div class="feature-icon">📊</div>
+                <h3>Analytics Dashboard</h3>
+                <p>Real-time business intelligence with customizable reports</p>
+            </div>
+            
+            <!-- Custom Settings -->
+            <div class="feature-item settings">
+                <div class="feature-icon">⚙️</div>
+                <h3>Custom Settings</h3>
+                <p>Tailor the system to your clinic's unique workflow and requirements</p>
+            </div>
+            
+            <!-- 24/7 Support -->
+            <div class="feature-item support">
+                <div class="feature-icon">🛟</div>
+                <h3>24/7 Support</h3>
+                <p>Round-the-clock technical assistance for uninterrupted operations</p>
+            </div>
+            
+            <!-- Billing -->
+            <div class="feature-item billing">
+                <div class="feature-icon">💰</div>
+                <h3>Billing Management</h3>
+                <p>Comprehensive billing system with insurance claim processing</p>
+            </div>
+            
+            <!-- Staff Management -->
+            <div class="feature-item staff">
+                <div class="feature-icon">👥</div>
+                <h3>Staff Management</h3>
+                <p>Efficient staff scheduling, performance tracking, and role management</p>
+            </div>
+            
+            <!-- Central Hub -->
+            <div class="center-circle">ClinicEase<br>Central Hub</div>
+            <div class="feature-highlight"></div>
+        </div>
+        
+        <div class="footer">
+            ClinicEase - Revolutionizing Healthcare Management | © 2024 All Rights Reserved
+        </div>
+    </div>
+
+    <script>
+        // Add connection lines dynamically
+        document.addEventListener('DOMContentLoaded', function() {
+            const centerCircle = document.querySelector('.center-circle');
+            const featureItems = document.querySelectorAll('.feature-item');
+            const container = document.querySelector('.features-container');
+            
+            featureItems.forEach(item => {
+                const line = document.createElement('div');
+                line.className = 'connection-line';
+                
+                // Calculate positions
+                const centerRect = centerCircle.getBoundingClientRect();
+                const itemRect = item.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
+                
+                const centerX = centerRect.left + centerRect.width/2 - containerRect.left;
+                const centerY = centerRect.top + centerRect.height/2 - containerRect.top;
+                const itemX = itemRect.left + itemRect.width/2 - containerRect.left;
+                const itemY = itemRect.top + itemRect.height/2 - containerRect.top;
+                
+                // Calculate distance and angle
+                const dx = itemX - centerX;
+                const dy = itemY - centerY;
+                const distance = Math.sqrt(dx*dx + dy*dy);
+                const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                
+                // Set line properties
+                line.style.width = distance + 'px';
+                line.style.left = centerX + 'px';
+                line.style.top = centerY + 'px';
+                line.style.transform = `rotate(${angle}deg)`;
+                
+                container.appendChild(line);
+                
+                // Add animation delay for staggered effect
+                line.style.animationDelay = Math.random() * 2 + 's';
+            });
+        });
+    </script>
+</body>
+</html>
