@@ -19,9 +19,7 @@ pipeline {
         stage('Run Container') {
             steps {
                 script {
-                    // Stop old container if exists
                     sh 'docker rm -f clinicease || true'
-                    // Run new container on port 80
                     sh 'docker run -d --name clinicease -p 80:80 clinicease-site'
                 }
             }
