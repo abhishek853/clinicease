@@ -1,28 +1,44 @@
 pipeline {
     agent any
 
+    environment {
+        APP_NAME = "clinicease-frontend"
+        APP_PORT = "8081"
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/abhishek853/clinicease.git'
+                git url: 'https://github.com/abhishek853/clinicease.git', branch: 'main'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    sh 'docker build -t clinicease-site .'
-                }
+                sh "docker build -t ${APP_NAME} ."
             }
         }
 
         stage('Run Container') {
             steps {
-                script {
-                    sh 'docker rm -f clinicease || true'
-                    sh 'docker run -d --name clinicease -p 80:80 clinicease-site'
-                }
+                sh """
+                # Stop existing container if running
+                docker stop ${APP_NAME} || true
+                docker rm ${APP_NAME} || true
+
+                # Run container on port 8081
+                docker run -d --name ${APP_NAME} -p ${APP_PORT}:80 ${APP_NAME}
+                """
             }
+        }
+    }
+
+    post {
+        success {
+            echo "ClinicEase deployed successfully!"
+        }
+        failure {
+            echo "Deployment failed."
         }
     }
 }
