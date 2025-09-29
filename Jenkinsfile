@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         APP_NAME = "clinicease-frontend"
-        APP_PORT = "8081"
+        APP_PORT = "8085"
     }
 
     stages {
